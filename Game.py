@@ -1,5 +1,5 @@
 from gamelib import*
-game = Game(1269,713,"Wall Defense")
+game = Game(1000,713,"Wall Defense")
 
 #Graphics
 bk = Image("bk.jpg",game)
@@ -99,12 +99,12 @@ skele8.visible = False
 #Fireball Setup
 fireball = Animation("fireball2.png",8,game,512/8,63)
 fireball.resizeBy(100)
-fireball.moveTo(1269/2,565)
+fireball.moveTo(1000/2,565)
 
 #Fireball 2 Setup
 fireball2 = Animation("fireball2.png",8,game,512/8,63)
 fireball2.resizeBy(100)
-fireball2.moveTo(1100,565)
+fireball2.moveTo(880,565)
 fireball2.visible = False
 
 gameover = Image("gameover.png",game)
@@ -139,10 +139,10 @@ while not game.over:
     layer4.draw()
     layer5.draw()
 
-    game.drawText("You are a wandering swordsman looking for adventure and excitement. You are currently walking aimlessly",175,100)
-    game.drawText("through the grasslands. As you keep wallking you soon see the end of the desert and start see a forest full of life.",175,120)
-    game.drawText("As you approach the forest you see a sign on the ground and it has written on it DANGER with a skull and",175,140)
-    game.drawText("crossbones. You decide to keep going to seek whatever the forest hides in the name of adventure and excitement.",175,160)
+    game.drawText("You are a wandering swordsman looking for adventure and excitement. You are currently walking aimlessly",60,100)
+    game.drawText("through the grasslands. As you keep wallking you soon see the end of the desert and start see a forest full of life.",60,120)
+    game.drawText("As you approach the forest you see a sign on the ground and it has written on it DANGER with a skull and",60,140)
+    game.drawText("crossbones. You decide to keep going to seek whatever the forest hides in the name of adventure and excitement.",60,160)
 
     #Character
     left.draw()
@@ -332,7 +332,7 @@ while not game.over:
         hero.health -=2
         left.health -=2
 
-    if attack.collidedWith(skele2,"rectangle") or attack2.collidedWith(skele2,"rectangle"):
+    if attack.collidedWith(skele2) or attack2.collidedWith(skele2):
         skele1.health -=5
 
     if skele1.health <=0:
@@ -461,7 +461,7 @@ boss.health = 250
 hero.moveTo(100,625)
 Left = 0
 Right = 0
-boss.moveTo(1269/2,560)
+boss.moveTo(1000/2,560)
 while not game.over:
     game.processInput()
     game.drawText("Level 2",200,200)
@@ -542,32 +542,34 @@ while not game.over:
     fireballpassed = 0
     fireball.setSpeed(5,90)
     fireball.move()
-    
+
+    #Fireball
     if fireball.collidedWith(hero) or fireball.collidedWith(left) or fireball.collidedWith(attack) or fireball2.collidedWith(attack2):
         hero.health -= 2
         fireball.visible = False
-        fireball.moveTo(1269/2,565)
+        fireball.moveTo(1000/2,565)
         fireball.visible = True
         fireballpassed += 1
             
     if fireball.collidedWith(block) or fireball.collidedWith(block2):
         hero.health -= 1
         fireball.visible = False
-        fireball.moveTo(1269/2,565)
+        fireball.moveTo(1000/2,565)
         fireball.visible = True
         fireballpassed += 1
-#
+        
+    #Fireball 2
     if fireball2.collidedWith(hero) or fireball2.collidedWith(left) or fireball2.collidedWith(attack) or fireball2.collidedWith(attack2):
         hero.health -= 2
         fireball2.visible = False
-        fireball2.moveTo(1100,565)
+        fireball2.moveTo(880,565)
         fireball2.visible = True
         fireballpassed += 1
             
     if fireball2.collidedWith(block) or fireball2.collidedWith(block2):
         hero.health -= 1
         fireball2.visible = False
-        fireball2.moveTo(1100,565)
+        fireball2.moveTo(880,565)
         fireball2.visible = True
         fireballpassed += 1
         
@@ -575,18 +577,18 @@ while not game.over:
         fireballpassed += 1
 
     if fireballpassed >= 1:
-        fireball.moveTo(1269/2,565)
+        fireball.moveTo(1000/2,565)
         fireballpassed = 0
 
     if fireballpassed >= 1:
-        fireball2.moveTo(1100,565)
+        fireball2.moveTo(880,565)
         fireballpassed = 0
 
     if attack.collidedWith(boss) or attack2.collidedWith(boss):
         boss.health -= 10
 
     if boss.health <= 125:
-        boss.moveTo(1100,560)
+        boss.moveTo(880,560)
         fireball.visible = False
         fireball2.visible = True
         fireball2.draw()
