@@ -1,29 +1,32 @@
 from gamelib import*
-game = Game(1000,713,"Wall Defense")
+game = Game(800,600,"Wall Defense")
+
+p = 470 #y value for fireball
 
 #Graphics
 bk = Image("bk.jpg",game)
 bk.resizeTo(1269,713)
              
 gbk = Image("Forest.jpg",game)
+gbk.resizeTo(800,600)
 
 layer1 = Image("Hills layer 01.png",game)
-layer1.resizeTo(1269,713)
+layer1.resizeTo(800,600)
 
 layer2 = Image("Hills layer 02.png",game)
-layer2.resizeTo(1269,713)
+layer2.resizeTo(800,600)
 
 layer3 = Image("Hills layer 03.png",game)
-layer3.resizeTo(1269,713)
+layer3.resizeTo(800,600)
 
 layer4 = Image("Hills layer 04.png",game)
-layer4.resizeTo(1269,713)
+layer4.resizeTo(800,600)
 
 layer5 = Image("Hills layer 05.png",game)
-layer5.resizeTo(1269,713)
+layer5.resizeTo(800,600)
 
 layer6 = Image("Hills layer 06.png",game)
-layer6.resizeTo(1269,713)
+layer6.resizeTo(800,600)
 
 title = Image("Logo.png",game)
 title.y -= 200
@@ -33,7 +36,7 @@ play.y = 450
 
 hero = Animation("knight1.png",8,game,336/8,42,4)
 hero.resizeBy(300)
-hero.moveTo(100,615)
+hero.moveTo(100,510)
 hero.health = 150
 
 left = Animation("left.png",8,game,336/8,42,4)
@@ -60,9 +63,11 @@ boss = Image("boss.png",game)
 boss.resizeBy(190)
 
 #Monsters
+w = 512 #y value for the skeletons
+
 skele1 = Animation("sidle1.png",11,game,264/11,32,4) #1
 skele1.resizeBy(375)
-skele1.moveTo(300,620)
+skele1.moveTo(300,w)
 
 skele2 = Animation("sattack1.png",18,game,774/18,37,4)
 skele2.resizeBy(375)
@@ -71,7 +76,7 @@ skele2.visible = False
 
 skele3 = Animation("sidle1.png",11,game,264/11,32,4) #2
 skele3.resizeBy(375)
-skele3.moveTo(500,620)
+skele3.moveTo(500,w)
 
 skele4 = Animation("sattack1.png",18,game,774/18,37,4)
 skele4.resizeBy(375)
@@ -80,31 +85,22 @@ skele4.visible = False
 
 skele5 = Animation("sidle1.png",11,game,264/11,32,4) #3
 skele5.resizeBy(375)
-skele5.moveTo(700,620)
+skele5.moveTo(700,w)
 
 skele6 = Animation("sattack1.png",18,game,774/18,37,4)
 skele6.resizeBy(375)
 skele6.moveTo(skele5.x - 15,skele5.y - 10)
 skele6.visible = False
 
-skele7 = Animation("sidle1.png",11,game,264/11,32,4) #4
-skele7.resizeBy(375)
-skele7.moveTo(900,620)
-
-skele8 = Animation("sattack1.png",18,game,774/18,37,4)
-skele8.resizeBy(375)
-skele8.moveTo(skele7.x - 15,skele7.y - 10)
-skele8.visible = False
-
 #Fireball Setup
 fireball = Animation("fireball2.png",8,game,512/8,63)
 fireball.resizeBy(100)
-fireball.moveTo(1000/2,565)
+fireball.moveTo(800/2,p)
 
 #Fireball 2 Setup
 fireball2 = Animation("fireball2.png",8,game,512/8,63)
 fireball2.resizeBy(100)
-fireball2.moveTo(880,565)
+fireball2.moveTo(695,p)
 fireball2.visible = False
 
 gameover = Image("gameover.png",game)
@@ -112,6 +108,10 @@ gameover.resizeBy(100)
 
 winner = Image("winner.png",game)
 winner.resizeBy(100)
+
+#Music
+game.setMusic("bks.ogg") #https://www.youtube.com/watch?v=lUMSK6LmXCQ this helped
+game.playMusic()
 
 #Title Screen
 while not game.over:
@@ -139,10 +139,11 @@ while not game.over:
     layer4.draw()
     layer5.draw()
 
-    game.drawText("You are a wandering swordsman looking for adventure and excitement. You are currently walking aimlessly",60,100)
-    game.drawText("through the grasslands. As you keep wallking you soon see the end of the desert and start see a forest full of life.",60,120)
-    game.drawText("As you approach the forest you see a sign on the ground and it has written on it DANGER with a skull and",60,140)
-    game.drawText("crossbones. You decide to keep going to seek whatever the forest hides in the name of adventure and excitement.",60,160)
+    game.drawText("You are a wandering swordsman looking for adventure and excitement. You are currently walking",10,80)
+    game.drawText("aimlessly through the grasslands. As you keep wallking you soon see the end of the desert",10,100)
+    game.drawText("and start see a forest full of life. As you approach the forest you see a sign on the ground",10,120)
+    game.drawText("and it has written on it DANGER with a skull and crossbones. You decide to keep",10,140)
+    game.drawText("going to seek whatever the forest hides in the name of adventure and excitement.",10,160)
 
     #Character
     left.draw()
@@ -225,7 +226,7 @@ game.over = False
 #Level 1
 Right = 0
 Left = 0
-hero.moveTo(100,625)
+hero.moveTo(100,515)
 while not game.over:
     game.processInput()
     gbk.draw()
@@ -306,9 +307,6 @@ while not game.over:
     X2 = 400 #2
     
     X3 = 600 #3
-
-    X4 = 800 #4
-
        
     skele1.draw() #1
     skele2.draw()
@@ -409,48 +407,12 @@ while not game.over:
         skele6.moveTo(1400,713)
         skele5.moveTo(1400,713)
 
-    skele7.draw() #4
-    skele8.draw()
-    skele8.stop()
-
-    if hero.x > X4:
-        skele8.visible = True
-        skele8.prevFrame()
-        skele7.visible = False
-    if hero.x < X4:
-        skele8.visible = False
-        skele7.visible = True
-
-    if skele8.collidedWith(hero) or skele8.collidedWith(left):
-        hero.moveTo(hero.x-10,hero.y)
-        hero.health -=5
-        left.health -=5
-
-    if skele8.collidedWith(block) or skele8.collidedWith(block2):
-        hero.moveTo(hero.x-10,hero.y)
-        hero.health -=2
-        left.health -=2
-
-    if attack.collidedWith(skele8) or attack2.collidedWith(skele8):
-        skele7.health -=5
-    
-    if hero.health <=0:
-        game.clearBackground()
-        gameover.draw()
-
-    if skele7.health <=0:
-        skele8.visible = False
-        skele7.visible = False
-        skele8.moveTo(1400,713)
-        skele7.moveTo(1400,713)
-
     if hero.isOffScreen("right"):
         game.over = True
 
     game.drawText("Health: " + str(skele1.health),skele1.x,skele1.y - 100)#1
     game.drawText("Health: " + str(skele3.health),skele3.x,skele3.y - 100)#2
     game.drawText("Health: " + str(skele5.health),skele5.x,skele5.y - 100)#3
-    game.drawText("Health: " + str(skele7.health),skele7.x,skele7.y - 100)#4
     game.drawText("Health: " + str(hero.health),hero.x,hero.y + 70)
     
     game.update(35)   
@@ -458,10 +420,10 @@ game.over = False
         
 #Level 2
 boss.health = 250
-hero.moveTo(100,625)
+hero.moveTo(100,515)
 Left = 0
 Right = 0
-boss.moveTo(1000/2,560)
+boss.moveTo(800/2,460)
 while not game.over:
     game.processInput()
     game.drawText("Level 2",200,200)
@@ -543,18 +505,20 @@ while not game.over:
     fireball.setSpeed(5,90)
     fireball.move()
 
+
+
     #Fireball
     if fireball.collidedWith(hero) or fireball.collidedWith(left) or fireball.collidedWith(attack) or fireball2.collidedWith(attack2):
         hero.health -= 2
         fireball.visible = False
-        fireball.moveTo(1000/2,565)
+        fireball.moveTo(800/2,p)
         fireball.visible = True
         fireballpassed += 1
             
     if fireball.collidedWith(block) or fireball.collidedWith(block2):
         hero.health -= 1
         fireball.visible = False
-        fireball.moveTo(1000/2,565)
+        fireball.moveTo(800/2,p)
         fireball.visible = True
         fireballpassed += 1
         
@@ -562,14 +526,14 @@ while not game.over:
     if fireball2.collidedWith(hero) or fireball2.collidedWith(left) or fireball2.collidedWith(attack) or fireball2.collidedWith(attack2):
         hero.health -= 2
         fireball2.visible = False
-        fireball2.moveTo(880,565)
+        fireball2.moveTo(695,p)
         fireball2.visible = True
         fireballpassed += 1
             
     if fireball2.collidedWith(block) or fireball2.collidedWith(block2):
         hero.health -= 1
         fireball2.visible = False
-        fireball2.moveTo(880,565)
+        fireball2.moveTo(695,p)
         fireball2.visible = True
         fireballpassed += 1
         
@@ -577,18 +541,18 @@ while not game.over:
         fireballpassed += 1
 
     if fireballpassed >= 1:
-        fireball.moveTo(1000/2,565)
+        fireball.moveTo(800/2,p)
         fireballpassed = 0
 
     if fireballpassed >= 1:
-        fireball2.moveTo(880,565)
+        fireball2.moveTo(695,p)
         fireballpassed = 0
 
     if attack.collidedWith(boss) or attack2.collidedWith(boss):
         boss.health -= 10
 
     if boss.health <= 125:
-        boss.moveTo(880,560)
+        boss.moveTo(695,460)
         fireball.visible = False
         fireball2.visible = True
         fireball2.draw()
